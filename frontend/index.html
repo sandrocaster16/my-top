@@ -6,15 +6,20 @@
     <title>my-top</title>
 </head>
 <body>
-    <input type="text" placeholder="ip">
-    <br>
-    <input type="text" placeholder="port">
-    <br>
-    <br>
-    <input type="submit" value="подключиться к удаленному устройству">
-    <br>
-    <br>
-    <input type="submit" value="подключиться к своему устройству">
+    <div>
+        <input type="text" id="ip-input" placeholder="ip">
+        <input type="text" id="port-input" placeholder="port">
+        <button id="connect-remote">подключиться к удаленному устройству</button>
+    </div>
+
+    <hr>
+
+    <div>
+        <input type="text" id="local-port-input" placeholder="port" value="12345">
+        <button id="connect-local">подключиться к этому устройству</button>
+    </div>
+
+    <div id="status"></div>
 
     <script src="dist/main.js"></script>
 </body>
