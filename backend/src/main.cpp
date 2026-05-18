@@ -3,11 +3,12 @@
 #include <chrono>
 #include <string>
 #include <httplib.h>
+#include "Scanner.h"
 
 void print_help(const char* prog_name){
-    std::cout<<"Usage: "<<prog_name<<"[-p <port>]\n";
+    std::cout<<"Usage: "<<prog_name<<" [-p <port>]\n";
     std::cout<<"  -p, --port    port\n";
-    std::cout<<"  -d, --delay   delay\n";
+    std::cout<<"  -d, --delay   delay (ms)\n";
     std::cout<<"  -pwc, --ping-websocket   delay\n";
 }
 
@@ -20,7 +21,7 @@ std::string get_public_ip(){
         }
     }
 
-    return "Не удалось получить IP (нет интернета?)";
+    return "<NOT FOUND>";
 }
 
 int main(int argc, char* argv[]){
@@ -39,6 +40,9 @@ int main(int argc, char* argv[]){
         else if((arg == "-d" || arg == "--delay") && i+1 < argc){
             delay = std::stoi(argv[++i]);
         }
+        else if((arg == "-pwc" || arg == "--ping-websocket") && i+1 < argc){
+            ping_interval = std::stoi(argv[++i]);
+        }
         else if(arg == "-h" || arg == "--help"){
             print_help(argv[0]);
             return 0;
@@ -49,20 +53,18 @@ int main(int argc, char* argv[]){
     std::cout<<"Start monitoring\n";
     std::cout<<"Delay: "<<delay<<" ms\n";
 
-    // std::thread worker();
-    // worker.detach();
-
     httplib::Server svr;
+    Scanner scanner;
 
     svr.set_websocket_ping_interval(ping_interval);
 
-    svr.WebSocket("/get_monitoring_resources", [delay](const httplib::Request &, httplib::ws::WebSocket &ws){
-        std::string msg = "qwe\n";
-        int local_delay = delay;
+    svr.WebSocket("/get_monitoring_resources", [&scanner, delay](const httplib::Request &, httplib::ws::WebSocket &ws){
+        while(ws.is_open()){
+            scanner.monitoring();
+            std::string msg = scanner.get_results().dump();
 
-        while (ws.is_open()){
             ws.send(msg);
-            std::this_thread::sleep_for(std::chrono::milliseconds(local_delay));
+            std::this_thread::sleep_for(std::chrono::milliseconds(delay));
         }
     });
 

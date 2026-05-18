@@ -15,19 +15,23 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(httplib)
 
 # nlohmann_json
-# FetchContent_Declare(
-#   json
-#   GIT_REPOSITORY https://github.com/nlohmann/json.git
-#   GIT_TAG v3.11.3
-# )
-# FetchContent_MakeAvailable(json)
+FetchContent_Declare(
+  json
+  GIT_REPOSITORY https://github.com/nlohmann/json.git
+  GIT_TAG v3.11.3
+)
+FetchContent_MakeAvailable(json)
+
+include_directories(include)
 
 add_executable(app
     src/main.cpp
+    include/Scanner.cpp
 )
 
 target_link_libraries(app
     PRIVATE
     httplib::httplib
+    nlohmann_json::nlohmann_json
     pthread
 )
