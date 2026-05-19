@@ -6,10 +6,11 @@
 #include "Scanner.h"
 
 void print_help(const char* prog_name){
-    std::cout<<"Usage: "<<prog_name<<" [-p <port>]\n";
-    std::cout<<"  -p, --port    port\n";
-    std::cout<<"  -d, --delay   delay (ms)\n";
-    std::cout<<"  -pwc, --ping-websocket   delay\n";
+    std::cout<<"Usage: "<<prog_name<<" [-p <port>]\n\n";
+    std::cout<<"  -p,   --port              port (default: 12345)\n";
+    std::cout<<"  -d,   --delay             monitoring's delay (ms)\n";
+    std::cout<<"  -pwc, --ping-websocket    websocket's ping which check connection\n";
+    std::cout<<"  -v,   --version           look the version\n";
 }
 
 std::string get_public_ip(){
@@ -25,7 +26,7 @@ std::string get_public_ip(){
 }
 
 int main(int argc, char* argv[]){
-    std::string ip = get_public_ip();
+    std::string ip = get_public_ip(); // это костыль :)
     int port = 12345;
     int delay = 100;
     int ping_interval = 30;
@@ -46,6 +47,14 @@ int main(int argc, char* argv[]){
         else if(arg == "-h" || arg == "--help"){
             print_help(argv[0]);
             return 0;
+        }
+        else if(arg == "-v" || arg == "--version"){
+            std::cout<<"Version 1.0.0\n";
+            return 0;
+        }
+        else{
+            std::cerr<<"Error, please use -h or --help to look functional\n";
+            return 1;
         }
     }
 
