@@ -7,7 +7,6 @@ CLONE_DIR="my-top-backend"
 INSTALL_DIR="/usr/local/bin"
 BINARY_NAME="my-top"
 
-# цвета
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -17,7 +16,6 @@ info()    { echo -e "${GREEN}[+]${NC} $1"; }
 warning() { echo -e "${YELLOW}[!]${NC} $1"; }
 error()   { echo -e "${RED}[✗]${NC} $1"; exit 1; }
 
-# определяем пакетный менеджер
 detect_pkg_manager(){
     if   command -v apt-get &>/dev/null; then echo "apt"
     elif command -v dnf     &>/dev/null; then echo "dnf"
@@ -34,16 +32,16 @@ install_deps(){
     case $pm in
         apt)
             sudo apt-get update -qq
-            sudo apt-get install -y git cmake g++
+            sudo apt-get install -y git cmake g++ curl
             ;;
         dnf)
-            sudo dnf install -y git cmake gcc-c++
+            sudo dnf install -y git cmake gcc-c++ curl
             ;;
         pacman)
-            sudo pacman -Sy --noconfirm git cmake base-devel
+            sudo pacman -Sy --noconfirm git cmake base-devel curl
             ;;
         zypper)
-            sudo zypper install -y git cmake gcc-c++
+            sudo zypper install -y git cmake gcc-c++ curl
             ;;
     esac
 }
@@ -59,6 +57,23 @@ clone_repo(){
     cd "$CLONE_DIR"
     git sparse-checkout set backend
     cd ..
+}
+
+fetch_headers(){
+    local vendor_dir="$CLONE_DIR/backend/vendor"
+    mkdir -p "$vendor_dir/nlohmann"
+
+    if [ ! -f "$vendor_dir/httplib.h" ]; then
+        info "Скачиваем httplib.h..."
+        curl -fsSL "https://github.com/yhirose/cpp-httplib/releases/download/v0.18.3/httplib.h" \
+             -o "$vendor_dir/httplib.h"
+    fi
+
+    if [ ! -f "$vendor_dir/nlohmann/json.hpp" ]; then
+        info "Скачиваем nlohmann/json.hpp..."
+        curl -fsSL "https://github.com/nlohmann/json/releases/download/v3.11.3/json.hpp" \
+             -o "$vendor_dir/nlohmann/json.hpp"
+    fi
 }
 
 build(){
@@ -88,6 +103,7 @@ main(){
 
     install_deps "$pm"
     clone_repo
+    fetch_headers
     build
     install_binary
 
