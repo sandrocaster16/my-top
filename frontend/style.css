@@ -1,0 +1,121 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    padding: 20px;
+    line-height: 1.5;
+}
+
+#monitor-container h3{
+    margin-top: 0;
+}
+
+#config-connect div{
+    margin-bottom: 20px;
+}
+
+hr{
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+input{
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+button{
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+}
+
+button:hover{
+    background-color: #e8e8e8;
+}
+
+#monitor-container{
+    display: none;
+}
+
+#disconnect-btn{
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+#disconnect-btn:hover{
+    background-color: #e63939;
+}
+
+#data-display{
+    font-family: monospace;
+}
+
+#cpu-mem-stats{
+    background: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+}
+
+#tasks-stats{
+    margin: 15px 0;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.table-container{
+    max-height: 600px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+table th, table td{
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+thead{
+    position: sticky;
+    top: 0;
+    background: #e0e0e0;
+    z-index: 1;
+}
+
+th{
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+th:hover{
+    background-color: #d0d0d0;
+}
+
+#status{
+    margin: auto 0 auto 15px;
+    font-weight: bold;
+}
+
+.controls{
+    display: flex;
+}

@@ -4,22 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>my-top</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div>
-        <input type="text" id="ip-input" placeholder="ip">
-        <input type="text" id="port-input" placeholder="port">
-        <button id="connect-remote">подключиться к удаленному устройству</button>
+    <div id="config-connect">
+        <div>
+            <input type="text" id="ip-input" placeholder="ip">
+            <input type="text" id="port-input" placeholder="port">
+            <button id="connect-remote">подключиться к удаленному устройству</button>
+        </div>
+        
+        <hr>
+
+        <div>
+            <input type="text" id="local-port-input" placeholder="port" value="12345">
+            <button id="connect-local">подключиться к этому устройству</button>
+        </div>
     </div>
 
-    <hr>
+    <div id="monitor-container">
+        <div class="controls">
+            <button id="disconnect-btn">Отключиться</button>
+            <div id="status"></div>
+        </div>
 
-    <div>
-        <input type="text" id="local-port-input" placeholder="port" value="12345">
-        <button id="connect-local">подключиться к этому устройству</button>
+        <br>
+
+        <div id="data-display">
+            <div id="cpu-mem-stats"></div>
+            <div id="tasks-stats"></div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr id="table-headers">
+                            <th data-key="pid">PID</th>
+                            <th data-key="user">USER</th>
+                            <th data-key="pr">PR</th>
+                            <th data-key="ni">NI</th>
+                            <th data-key="virt">VIRT</th>
+                            <th data-key="res">RES</th>
+                            <th data-key="shr">SHR</th>
+                            <th data-key="s">S</th>
+                            <th data-key="cpu_percent">%CPU</th>
+                            <th data-key="mem_percent">%MEM</th>
+                            <th data-key="time">TIME+</th>
+                            <th data-key="command">COMMAND</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="processes-table-body"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
-    <div id="status"></div>
 
     <script src="dist/main.js"></script>
 </body>
