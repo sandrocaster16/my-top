@@ -65,7 +65,7 @@ fetch_headers(){
 
     if [ ! -f "$vendor_dir/httplib.h" ]; then
         info "Скачиваем httplib.h..."
-        curl -fsSL "https://raw.githubusercontent.com/yhirose/cpp-httplib/v0.18.3/httplib.h" \
+        curl -fsSL "https://raw.githubusercontent.com/yhirose/cpp-httplib/v0.45.0/httplib.h" \
              -o "$vendor_dir/httplib.h"
     fi
 
