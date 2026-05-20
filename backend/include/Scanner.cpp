@@ -190,7 +190,7 @@ void Scanner::update_process_metrics(){
 
         // TIME+
         ull total_seconds = total_time / clock_ticks;
-        char time_buf[16];
+        char time_buf[64];
         snprintf(time_buf, sizeof(time_buf), "%llu:%02llu.%02llu",
             total_seconds / 60,
             total_seconds % 60,
